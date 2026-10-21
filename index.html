@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#d6cf8a">
+<meta name="description" content="Jelajahi tempat-tempat bersejarah di Malang melalui peta interaktif.">
+<title>Jelajah Sejarah Malang — Peta Interaktif</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="css/map.css">
+<style>
+:root{--heritage:#d5ce83;--ink:#242820;--muted:#77796d;--paper:#f7f5ec;--green:#159b68}
+*{box-sizing:border-box}body{margin:0;background:#f3f1e7;color:var(--ink);font-family:Arial,Helvetica,sans-serif}
+.site-header{height:70px;padding:10px 24px;background:var(--heritage);display:flex;align-items:center;justify-content:space-between;border:0}
+.brand{display:flex;align-items:center;gap:12px}.brand-icon{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:#fff9dc;font-size:22px}
+.brand strong{font:700 20px Georgia,serif;display:block}.brand small{display:block;font-size:10px;letter-spacing:1.4px;text-transform:uppercase;color:#626046;margin-top:3px}
+.header-tag{font:italic 12px Georgia,serif;color:#55523a}
+main{padding:18px;max-width:1600px;margin:auto}.intro{display:flex;align-items:end;justify-content:space-between;gap:18px;margin:0 0 14px}
+.intro .eyebrow{font-size:10px;letter-spacing:2px;font-weight:800;color:#79754b;margin:0 0 5px}.intro h1{font:500 clamp(24px,3vw,36px)/1.05 Georgia,serif;margin:0}.intro h1 em{font-weight:500;color:#77713d}.intro p{margin:7px 0 0;color:#747466;font-size:13px}
+.map-layout{display:grid;grid-template-columns:minmax(0,1.75fr) minmax(290px,.8fr);gap:12px;min-height:570px}
+.map-card{position:relative;min-height:570px;border:8px solid #d5d2c8;background:#ddd;box-shadow:0 5px 16px #00000012}
+#map{height:100%;min-height:554px;width:100%;z-index:1}
+.map-overlay{position:absolute;z-index:500;top:14px;left:14px;padding:10px 13px;background:#fffdf0ed;border:1px solid #c9c3a4;box-shadow:0 2px 8px #0002;pointer-events:none}
+.map-overlay small{display:block;font-size:9px;color:#77714b;letter-spacing:1.3px;text-transform:uppercase}.map-overlay strong{display:block;font:700 20px Georgia,serif;color:#514e2c}
+.legend{position:absolute;bottom:20px;left:14px;z-index:500;background:#fffdf0ed;border:1px solid #d7d1b8;padding:9px 12px;display:flex;gap:12px;flex-wrap:wrap;font-size:10px;font-weight:bold}
+.legend span{display:flex;align-items:center;gap:5px}.legend i{width:9px;height:9px;border-radius:50%;display:inline-block}
+.side-panel{display:flex;flex-direction:column;border:1px solid #d8d5ca;background:white;min-height:570px;box-shadow:0 5px 16px #0000000d}
+.panel-title{padding:17px 18px 14px;background:#d5ce83}.panel-title small{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:#69633a}.panel-title h2{font:700 26px/1 Georgia,serif;margin:4px 0;color:#4e4a2a}.panel-title p{font-size:11px;margin:6px 0 0;color:#625e3e}
+.search{padding:12px 14px;border-bottom:1px solid #e8e6df}.search input{width:100%;padding:10px 12px;border:1px solid #d9d7cc;border-radius:3px;font-size:12px;background:#fbfaf5}
+.place-list{display:flex;flex-direction:column}.place-button{border:0;border-bottom:1px solid #e9e7e1;background:white;text-align:left;display:flex;align-items:center;gap:12px;padding:15px 14px;cursor:pointer;color:inherit;min-height:76px}.place-button:hover,.place-button.active{background:#f3f1e7}.pin{width:30px;height:30px;flex:0 0 30px;display:grid;place-items:center;color:white;border-radius:50% 50% 50% 4px;transform:rotate(-45deg);font-size:13px;box-shadow:0 2px 4px #0002}.pin span{transform:rotate(45deg)}.place-info{flex:1;min-width:0}.place-info strong{font-size:12px;display:block}.place-info small{display:block;color:#77786d;font-size:10px;margin-top:4px}.arrow{font-size:20px;color:#8a865b}
+.panel-foot{margin-top:auto;padding:13px 15px;background:#efeee8;font-size:10px;color:#69695e;line-height:1.5}.panel-foot strong{color:#484b3b}
+.site-footer{text-align:center;padding:18px 12px;font-size:10px;color:#777568}.leaflet-popup-content-wrapper{border-radius:4px}.leaflet-popup-content{width:230px!important;margin:12px}.popup-photo{display:block;width:100%;height:112px;object-fit:cover;border-radius:3px;margin-bottom:9px}.popup-title{font:700 15px Georgia,serif;margin-bottom:4px}.popup-type{font-size:10px;color:#777}.popup-description{font-size:11px;line-height:1.45;margin:7px 0 10px}.popup-actions{display:flex;flex-direction:column;gap:7px}.popup-actions a{display:block;text-align:center;padding:8px 9px;border-radius:3px;text-decoration:none;font-size:11px;font-weight:700}.popup-detail{background:#d5ce83;color:#39371f}.popup-map{background:#edf3e9;color:#17633f;border:1px solid #b8d0b8}
+@media(max-width:800px){.site-header{padding:10px 15px}.header-tag{display:none}main{padding:12px}.intro{align-items:start;flex-direction:column}.map-layout{grid-template-columns:1fr}.map-card{min-height:440px;border-width:5px}#map{min-height:430px}.side-panel{min-height:0}.place-button{min-height:68px}.panel-foot{margin-top:0}}
+</style>
+</head>
+<body>
+<header class="site-header">
+<a class="brand" href="./" aria-label="Jelajah Sejarah Malang, beranda"><span class="brand-icon">⌖</span><span><strong>Jelajah Sejarah Malang</strong><small>Architectural heritage map</small></span></a>
+<span class="header-tag">Kenali jejak masa lalu, jaga warisan kota</span>
+</header>
+<main>
+<section class="intro"><div><p class="eyebrow">PETA WARISAN • MALANG, JAWA TIMUR</p><h1>Jelajahi <em>jejak sejarah.</em></h1><p>Pilih penanda pada peta atau nama tempat untuk mulai menjelajah.</p></div></section>
+<section class="map-layout" aria-label="Peta interaktif tempat bersejarah">
+<div class="map-card"><div id="map" role="application" aria-label="Peta interaktif tempat bersejarah di Malang"></div><div class="map-overlay"></div><div class="legend"><span><i style="background:#16a36a"></i>Gerbang / Gate</span><span><i style="background:#cf3737"></i>Rumah / Houses</span><span><i style="background:#315cff"></i>Tempat ikonik</span></div></div>
+<aside class="side-panel"><div class="panel-title"><small>Architectural heritage map</small><h2>Tempat Bersejarah</h2><p>3 lokasi untuk dijelajahi</p></div><div class="search"><input id="placeSearch" type="search" placeholder="Cari nama tempat..." aria-label="Cari nama tempat"></div><div class="place-list" id="placeList">
+<button class="place-button" data-place="kayutangan"><span class="pin" style="background:#16a36a"><span>1</span></span><span class="place-info"><strong>Kawasan Kayutangan</strong><small>Kawasan heritage • Malang</small></span><span class="arrow">›</span></button>
+<button class="place-button" data-place="rumah-jengki"><span class="pin" style="background:#cf3737"><span>2</span></span><span class="place-info"><strong>Rumah Jengki</strong><small>Bangunan bersejarah</small></span><span class="arrow">›</span></button>
+<button class="place-button" data-place="alun-alun-tugu"><span class="pin" style="background:#315cff"><span>3</span></span><span class="place-info"><strong>Alun-Alun Tugu</strong><small>Monumen dan taman kota</small></span><span class="arrow">›</span></button>
+</div><div class="panel-foot"><strong>Jelajah Sejarah Malang</strong><br>Peta menggunakan OpenStreetMap. Klik titik penanda untuk melihat nama lokasi dan membuka halaman ceritanya.</div></aside>
+</section>
+</main><footer class="site-footer">Jelajah Sejarah Malang · Peta warisan arsitektur</footer>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+const places = {
+ 'kayutangan': {name:'Kawasan Kayutangan',type:'Kawasan heritage',description:'Kawasan bersejarah di pusat Kota Malang dengan jejak arsitektur dan suasana kota lama.',coords:[-7.9773,112.6304],color:'#16a36a',photo:'gambar/g3.png',url:'tempat/kawasan-kayutangan/'},
+ 'rumah-jengki': {name:'Rumah Jengki',type:'Bangunan bersejarah',description:'Bangunan yang menjadi bagian dari ragam warisan arsitektur di Kota Malang.',coords:[-7.9668,112.6258],color:'#cf3737',photo:'gambar/g1.png',url:'tempat/rumah-jengki/'},
+ 'alun-alun-tugu': {name:'Alun-Alun Tugu',type:'Monumen dan taman kota',description:'Monumen dan taman kota yang menjadi salah satu landmark bersejarah Kota Malang.',coords:[-7.9770,112.6341],color:'#315cff',photo:'gambar/g2.png',url:'tempat/alun-alun-tugu/'}
+};
+// Koordinat Alun-Alun Tugu di pusat Kota Malang.
+places['alun-alun-tugu'].coords=[-7.9770,112.6341];
+const map = L.map('map',{scrollWheelZoom:true}).setView([-7.9755,112.6305],15);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
+const markers={};
+function iconFor(p){return L.divIcon({className:'',html:`<div style="width:32px;height:32px;background:${p.color};border:3px solid white;border-radius:50% 50% 50% 5px;transform:rotate(-45deg);box-shadow:0 2px 6px #0005;display:grid;place-items:center"><span style="transform:rotate(45deg);color:white;font:bold 12px Arial">${p.name==='Kawasan Kayutangan'?'1':p.name==='Rumah Jengki'?'2':'3'}</span></div>`,iconSize:[32,32],iconAnchor:[16,30],popupAnchor:[0,-28]})}
+Object.entries(places).forEach(([id,p])=>{
+ const m=L.marker(p.coords,{icon:iconFor(p)}).addTo(map);
+ const mapsUrl=`https://www.google.com/maps/dir/?api=1&destination=${p.coords[0]},${p.coords[1]}&travelmode=walking`;
+ m.bindPopup(`<img class="popup-photo" src="${p.photo}" alt="Foto ${p.name}"><div class="popup-title">${p.name}</div><div class="popup-type">${p.type}</div><p class="popup-description">${p.description}</p><div class="popup-actions"><a class="popup-detail" href="${p.url}">Baca cerita tempat →</a><a class="popup-map" href="${mapsUrl}" target="_blank" rel="noopener">↗ Buka di Google Maps</a></div>`,{maxWidth:260});
+ m.on('click',()=>setActive(id,false));
+ markers[id]=m;
+});
+function setActive(id,scrollToMap=true){
+ document.querySelectorAll('.place-button').forEach(b=>b.classList.toggle('active',b.dataset.place===id));
+ const p=places[id];
+ map.flyTo(p.coords,16,{duration:.6});
+ markers[id].openPopup();
+ // Pada HP, gulir kembali ke peta setelah item di panel bawah dipilih.
+ if(scrollToMap && window.matchMedia('(max-width: 800px)').matches){
+   document.querySelector('.map-card').scrollIntoView({behavior:'smooth',block:'start'});
+ }
+}
+document.querySelectorAll('.place-button').forEach(b=>b.addEventListener('click',()=>setActive(b.dataset.place,true)));
+document.getElementById('placeSearch').addEventListener('input',e=>{const q=e.target.value.toLowerCase();document.querySelectorAll('.place-button').forEach(b=>{b.style.display=b.innerText.toLowerCase().includes(q)?'flex':'none'})});
+</script>
+</body></html>
