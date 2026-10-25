@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="id">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="theme-color" content="#f8f3e6">
+        <meta name="description" content="Jelajahi tempat-tempat bersejarah di Malang melalui peta cerita.">
+        <title>Rumah Pak Eko — Jelajah Sejarah Malang</title>
+        <link rel="stylesheet" href="../../css/map.css">
+        <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+        <style>
+            .swip{
+                display:flex;
+                justify-content:center;
+                align-items:center;
+                margin:34px auto 60px;
+                padding:0 18px
+            }
+            .swiper{width:min(400px,90vw);height:270px}.swiper-slide{display:flex;justify-content:center;align-items:center;border-radius:18px;overflow:hidden}.swiper-slide .ok{display:block;width:100%;height:100%;overflow:hidden;border-radius:18px}.swiper-slide img{display:block;width:100%;height:100%;object-fit:cover;border-radius:18px}.detail-photo{display:block;width:100%;max-height:480px;object-fit:cover;border-radius:12px;border:1px solid #e0d5bb;margin:20px 0}.back-link{display:inline-block;margin-bottom:25px;color:#627656;font-size:12px;font-weight:700}.site-header a{text-decoration:none}.hero{padding-bottom:45px}@media(max-width:700px){.swiper{height:230px}}
+        </style>
+         <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .slider {
+            position: relative;
+            width: 100%;
+            max-width: 1000px;
+            height: 450px;
+            margin: 40px auto;
+            overflow: hidden;
+            border-radius: 12px;
+        }
+
+        .slides {
+            display: flex;
+            height: 100%;
+            transition: transform 0.6s ease-in-out;
+        }
+
+        .slide {
+            min-width: 100%;
+            height: 100%;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Tombol navigasi */
+        .prev, .next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 12px 16px;
+            font-size: 24px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .prev {
+            left: 15px;
+        }
+
+        .next {
+            right: 15px;
+        }
+
+        .prev:hover, .next:hover {
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        /* Indikator slider */
+        .dots {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+        }
+
+        .dot.active {
+            background: white;
+        }
+
+        /* Tampilan mobile */
+        @media (max-width: 600px) {
+            .slider {
+                height: 280px;
+                margin: 20px auto;
+                border-radius: 0;
+            }
+        }
+        .label-bawah {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background-color: rgba(91, 70, 54, 0.8);
+    color: white;
+    padding: 12px 18px;
+    z-index: 9999;
+    font-family: Arial, sans-serif;
+  }
+
+  .label-bawah img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+
+  .label-teks {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .label-teks span:first-child {
+    font-size: 10px;
+    font-weight: bold;
+  }
+
+  .label-teks span {
+    font-size: 10px;
+    line-height: 1.4;
+  }
+    </style>
+        </head>
+        <body>
+            <header class="site-header">
+                <a class="brand" href="../../index.html" aria-label="Jelajah Sejarah Malang, beranda">
+                    <span class="brand-icon">🧭</span>
+                    <span><strong>Kampoeng Heritage Kayutangan</strong>
+                        <small>Architectural heritage kayutangan map · Malang</small>
+                    </span>
+                </a>
+            </header>
+            <main>
+                <section class="detail-page">
+                    <a class="back-link" href="../../kategori/houses.html">← Kembali</a>
+                    <div class="detail-grid">
+                        <article class="detail-story">
+                            <p class="eyebrow">BANGUNAN BERSEJARAH · MALANG</p>
+                            <h1>Rumah Pak Eko</h1>
+                            <div class="detail-meta">
+                                <span>📜 1950</span>
+                                <span>📍 Jalan Tugu, Kota Malang</span>
+                                
+                            </div>
+                            <div class="story-divider">
+                                <span>✦</span>
+                            </div>
+                            <img class="detail-photo" src="../../gambar/2-21.png" alt="Foto Rumah Pak Eko">
+                            <h2>Sepenggal cerita</h2>
+                            <p class="detail-description">
+Galeri Pak Eko merupakan rumah yang dibangun pada sekitar tahun 1950-an dan berada di Jl. A.R. Hakim No. 8, Kampung Heritage Kayutangan. Rumah ini ditempati oleh Pak Eko Wasinto sebagai generasi kedua. Koleksi barang antik yang merupakan warisan dari orang tuanya membuat rumah ini dikenal sebagai Galeri Antik. Bangunan telah beberapa kali direnovasi, namun masih mempertahankan elemen lama seperti ventilasi, jendela, dan pintu yang menunjukkan karakter arsitektur kolonial.                             <h2><i>A Brief Story</i></h2>
+                            <p class="detail-description"><i>
+Galeri Pak Eko is a house built around the 1950s, located at Jl. A.R. Hakim No. 8 in the Kayutangan Heritage Village. It is currently occupied by Pak Eko Wasinto, who represents the second generation of the family. Due to a collection of antiques inherited from his parents, the house has become known as an "Antique Gallery." Although the building has undergone several renovations, it still retains original elements such as its ventilation, windows, and doors that reflect its colonial architectural character.                            <hr style="margin-top: 10px;">
+
+                        </article>
+                    </div>
+                </section>
+                
+                
+<section style="padding-top: 0;">
+    <h2 class="gallery-heading">Galeri Rumah Pak Eko Kayutangan</h2>
+
+    <div class="coverflow-gallery" id="jengkiGallery">
+
+        <div class="coverflow-stage">
+
+            <div class="coverflow-item">
+                <img src="../../gambar/2-19.png"
+                     alt="Fasad Rumah Pak Eko Kayutangan">
+                <div class="coverflow-caption">
+                    <h3>Fasad Rumah</h3>
+                    <p>Arsitektur rumah Pak Eko</p>
+                </div>
+            </div>
+
+            <div class="coverflow-item">
+                <img src="../../gambar/2-20.png"
+                     alt="Detail arsitektur Rumah Pak Eko">
+                <div class="coverflow-caption">
+                    <h3>Detail Arsitektur</h3>
+                    <p>Karakter khas rumah Pak Eko</p>
+                </div>
+            </div>
+            <div class="coverflow-item">
+                <img src="../../gambar/2-21.png"
+                     alt="Detail arsitektur Rumah Pak Eko">
+                <div class="coverflow-caption">
+                    <h3>Detail Arsitektur</h3>
+                </div>
+            </div>
+            <div class="coverflow-item">
+                <img src="../../gambar/2-22.png"
+                     alt="Detail arsitektur Rumah Pak Eko">
+                <div class="coverflow-caption">
+                    <h3>Detail Arsitektur</h3>
+                </div>
+            </div>
+
+        </div>
+
+        <button class="coverflow-control prev"
+                type="button"
+                aria-label="Foto sebelumnya">&#10094;</button>
+
+        <button class="coverflow-control next"
+                type="button"
+                aria-label="Foto berikutnya">&#10095;</button>
+
+        <div class="coverflow-pagination"></div>
+    </div>
+</section>
+<div class="label-bawah">
+            <img src="../../gambar/um.png" alt="Logo Universitas Negeri Malang">
+
+            <div class="label-teks">
+                <span>PENGABDIAN MASYARAKAT TEMATIK</span>
+                <span>PROGRAM STUDI ARSITEKTUR</span>
+                <span><b>UNIVERSITAS NEGERI MALANG</b></span>
+            </div>
+        </div>
+<style>
+/* ===== GALERI ===== */
+#jengkiGallery {
+    --card-width: 350px;
+    --card-height: 380px;
+
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    height: 580px;
+    margin: 25px auto;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.gallery-heading {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* ===== AREA COVERFLOW ===== */
+#jengkiGallery .coverflow-stage {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    perspective: 1200px;
+}
+
+#jengkiGallery .coverflow-item {
+    position: absolute;
+    top: 43%;
+    left: 50%;
+    width: var(--card-width);
+    height: var(--card-height);
+
+    overflow: hidden;
+    border-radius: 14px;
+    background: #292521;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.22);
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transform: translate(-50%, -50%) scale(0.7);
+
+    transition:
+        transform 0.6s ease,
+        opacity 0.6s ease,
+        filter 0.6s ease;
+
+    will-change: transform, opacity;
+}
+
+#jengkiGallery .coverflow-item img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* ===== CAPTION ===== */
+#jengkiGallery .coverflow-caption {
+    position: absolute;
+    z-index: 2;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 24px 18px 20px;
+    color: #fff;
+    background: linear-gradient(
+        transparent,
+        rgba(0, 0, 0, 0.85)
+    );
+}
+
+#jengkiGallery .coverflow-caption h3 {
+    margin: 0 0 6px;
+    font-size: 19px;
+    font-weight: 600;
+}
+
+#jengkiGallery .coverflow-caption p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 13px;
+}
+
+/* ===== FOTO AKTIF ===== */
+#jengkiGallery .coverflow-item.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    z-index: 5;
+    filter: brightness(1);
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* ===== FOTO KIRI ===== */
+#jengkiGallery .coverflow-item.left {
+    opacity: 0.8;
+    visibility: visible;
+    z-index: 4;
+    filter: brightness(0.72);
+    transform:
+        translate(calc(-50% - 195px), -50%)
+        scale(0.82)
+        rotateY(12deg);
+}
+
+/* ===== FOTO KANAN ===== */
+#jengkiGallery .coverflow-item.right {
+    opacity: 0.8;
+    visibility: visible;
+    z-index: 4;
+    filter: brightness(0.72);
+    transform:
+        translate(calc(-50% + 195px), -50%)
+        scale(0.82)
+        rotateY(-12deg);
+}
+
+/* ===== FOTO TERJAUH ===== */
+#jengkiGallery .coverflow-item.far-left {
+    opacity: 0.35;
+    visibility: visible;
+    z-index: 2;
+    filter: brightness(0.55);
+    transform:
+        translate(calc(-50% - 320px), -50%)
+        scale(0.65)
+        rotateY(18deg);
+}
+
+#jengkiGallery .coverflow-item.far-right {
+    opacity: 0.35;
+    visibility: visible;
+    z-index: 2;
+    filter: brightness(0.55);
+    transform:
+        translate(calc(-50% + 320px), -50%)
+        scale(0.65)
+        rotateY(-18deg);
+}
+
+/* ===== TOMBOL NAVIGASI ===== */
+#jengkiGallery .coverflow-control {
+    position: absolute;
+    top: 43%;
+    transform: translateY(-50%);
+    z-index: 10;
+
+    width: 44px;
+    height: 44px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+
+    display: grid;
+    place-items: center;
+
+    color: white;
+    background: rgba(30, 30, 30, 0.65);
+    font-size: 20px;
+    cursor: pointer;
+
+    transition: background 0.25s ease;
+}
+
+#jengkiGallery .coverflow-control:hover {
+    background: #8a6745;
+}
+
+#jengkiGallery .prev {
+    left: 12px;
+    display: none;
+}
+
+#jengkiGallery .next {
+    right: 12px;
+    display: none;
+}
+
+/* ===== INDIKATOR TITIK ===== */
+#jengkiGallery .coverflow-pagination {
+    position: absolute;
+    z-index: 10;
+    left: 0;
+    right: 0;
+    bottom: 15px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 9px;
+}
+
+#jengkiGallery .coverflow-dot {
+    width: 9px;
+    height: 9px;
+    padding: 0;
+    border: none;
+    border-radius: 20px;
+
+    background: #bcbcbc;
+    cursor: pointer;
+
+    transition:
+        width 0.3s ease,
+        background 0.3s ease;
+}
+
+#jengkiGallery .coverflow-dot.active {
+    width: 26px;
+    background: #8a6745;
+}
+
+/* ===== TABLET ===== */
+@media (max-width: 800px) {
+    #jengkiGallery {
+        --card-width: 240px;
+        --card-height: 320px;
+        height: 420px;
+    }
+
+    #jengkiGallery .coverflow-item.left {
+        transform:
+            translate(calc(-50% - 140px), -50%)
+            scale(0.78)
+            rotateY(9deg);
+    }
+
+    #jengkiGallery .coverflow-item.right {
+        transform:
+            translate(calc(-50% + 140px), -50%)
+            scale(0.78)
+            rotateY(-9deg);
+    }
+
+    #jengkiGallery .coverflow-item.far-left,
+    #jengkiGallery .coverflow-item.far-right {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+/* ===== SMARTPHONE ===== */
+@media (max-width: 480px) {
+    #jengkiGallery {
+        --card-width: min(88vw, 380px);
+        --card-height: 285px;
+        height: 370px;
+    }
+
+    #jengkiGallery .coverflow-item.left {
+        transform:
+            translate(calc(-50% - 85px), -50%)
+            scale(0.68);
+        opacity: 0.5;
+    }
+
+    #jengkiGallery .coverflow-item.right {
+        transform:
+            translate(calc(-50% + 85px), -50%)
+            scale(0.68);
+        opacity: 0.5;
+    }
+
+    #jengkiGallery .coverflow-item.far-left,
+    #jengkiGallery .coverflow-item.far-right {
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    #jengkiGallery .coverflow-control {
+        width: 35px;
+        height: 35px;
+        font-size: 16px;
+    }
+
+    #jengkiGallery .prev {
+        left: 4px;
+    }
+
+    #jengkiGallery .next {
+        right: 4px;
+    }
+
+    #jengkiGallery .coverflow-caption {
+        padding: 20px 12px 16px;
+    }
+
+    #jengkiGallery .coverflow-caption h3 {
+        font-size: 16px;
+    }
+}
+
+/* ===== AKSESIBILITAS ===== */
+@media (prefers-reduced-motion: reduce) {
+    #jengkiGallery .coverflow-item,
+    #jengkiGallery .coverflow-dot {
+        transition: none;
+    }
+}
+</style>
+
+
+
+<script>
+(() => {
+    function initGallery() {
+        const gallery = document.getElementById("jengkiGallery");
+
+        if (!gallery) {
+            console.error("Galeri jengkiGallery tidak ditemukan.");
+            return;
+        }
+
+        const cards = Array.from(
+            gallery.querySelectorAll(".coverflow-item")
+        );
+        const pagination = gallery.querySelector(
+            ".coverflow-pagination"
+        );
+        const prevButton = gallery.querySelector(".prev");
+        const nextButton = gallery.querySelector(".next");
+
+        if (cards.length === 0 || !pagination) {
+            console.error("Foto atau pagination galeri tidak ditemukan.");
+            return;
+        }
+
+        // Hindari inisialisasi berulang
+        if (gallery.dataset.ready === "true") return;
+        gallery.dataset.ready = "true";
+
+        const total = cards.length;
+        let current = 0;
+        let autoplayTimer = null;
+
+        // Buat titik indikator
+        const dots = cards.map((card, index) => {
+            const dot = document.createElement("button");
+            dot.type = "button";
+            dot.className = "coverflow-dot";
+            dot.setAttribute(
+                "aria-label",
+                "Tampilkan foto " + (index + 1)
+            );
+
+            pagination.appendChild(dot);
+
+            dot.addEventListener("click", () => {
+                showSlide(index);
+                restartAutoplay();
+            });
+
+            return dot;
+        });
+
+        // Tampilkan foto sesuai urutan coverflow
+        function showSlide(index) {
+            current = (index + total) % total;
+
+            cards.forEach((card, i) => {
+                card.classList.remove(
+                    "active",
+                    "left",
+                    "right",
+                    "far-left",
+                    "far-right"
+                );
+
+                let offset = (i - current + total) % total;
+
+                if (offset > total / 2) {
+                    offset -= total;
+                }
+
+                if (offset === 0) {
+                    card.classList.add("active");
+                } else if (offset === -1) {
+                    card.classList.add("left");
+                } else if (offset === 1) {
+                    card.classList.add("right");
+                } else if (offset === -2) {
+                    card.classList.add("far-left");
+                } else if (offset === 2) {
+                    card.classList.add("far-right");
+                }
+            });
+
+            dots.forEach((dot, i) => {
+                dot.classList.toggle("active", i === current);
+            });
+        }
+
+        function nextSlide() {
+            showSlide(current + 1);
+        }
+
+        function prevSlide() {
+            showSlide(current - 1);
+        }
+
+        // Autoplay selalu berjalan selama halaman aktif
+        function startAutoplay() {
+            clearInterval(autoplayTimer);
+
+            autoplayTimer = setInterval(() => {
+                nextSlide();
+            }, 2000);
+        }
+
+        function restartAutoplay() {
+            startAutoplay();
+        }
+
+        // Tombol navigasi
+        if (nextButton) {
+            nextButton.addEventListener("click", () => {
+                nextSlide();
+                restartAutoplay();
+            });
+        }
+
+        if (prevButton) {
+            prevButton.addEventListener("click", () => {
+                prevSlide();
+                restartAutoplay();
+            });
+        }
+
+        // Swipe dengan jari
+        const stage = gallery.querySelector(".coverflow-stage");
+        let startX = 0;
+        let startY = 0;
+
+        if (stage) {
+            stage.addEventListener("touchstart", event => {
+                const touch = event.touches[0];
+                startX = touch.clientX;
+                startY = touch.clientY;
+            }, { passive: true });
+
+            stage.addEventListener("touchend", event => {
+                const touch = event.changedTouches[0];
+                const deltaX = touch.clientX - startX;
+                const deltaY = touch.clientY - startY;
+
+                if (
+                    Math.abs(deltaX) > 40 &&
+                    Math.abs(deltaX) > Math.abs(deltaY)
+                ) {
+                    if (deltaX < 0) nextSlide();
+                    else prevSlide();
+
+                    restartAutoplay();
+                }
+            }, { passive: true });
+        }
+
+        // Mulai dari foto pertama, lalu otomatis berganti
+        showSlide(0);
+        startAutoplay();
+
+        console.log("Galeri aktif. Autoplay berjalan.");
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener(
+            "DOMContentLoaded",
+            initGallery,
+            { once: true }
+        );
+    } else {
+        initGallery();
+    }
+})();
+</script>
+
+
+
+            </main>
+            <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+            <script>if(window.Swiper&&document.querySelector('.mySwiper')){new Swiper('.mySwiper',{effect:'cards',direction:'vertical',slidesPerView:1,spaceBetween:15,grabCursor:true,speed:800});}</script></body></html>
